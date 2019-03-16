@@ -23,7 +23,7 @@
 
 #define BUFFER_SIZE 15000
 #define HEADER_SIZE 5
-#define TIMEOUT 0.3
+#define TIMEOUT 0.2
 #define WINDOW_SIZE 10
 
 static int seq_number;  //most recent seq_num sended
@@ -39,7 +39,7 @@ void Sender_Init()
     max_seq_num = 0;
     expected_ack = 0;
     packet_buffer = (packet*)malloc(BUFFER_SIZE*sizeof(packet));
-    //memset(packet_buffer, 0, BUFFER_SIZE*sizeof(packet));
+    Sender_StartTimer(TIMEOUT);
 }
 
 /* sender finalization, called once at the very end.
@@ -63,6 +63,7 @@ void Send_Message()
     printf("Send_Message seq_number:%d max_seq_num:%d expected_ack:%d\n", seq_number, max_seq_num, expected_ack);
     Sender_ToLowerLayer(&packet_buffer[seq_number % BUFFER_SIZE]);
     seq_number++;
+    Sender_StartTimer(TIMEOUT);
   }
 
 }
@@ -132,16 +133,19 @@ void Sender_FromUpperLayer(struct message *msg)
    sender */
 void Sender_FromLowerLayer(struct packet *pkt)
 {
-  printf("Sender_FromLowerLayer  expected_ack: %d\n", expected_ack);
+
   int ack_number;
   memcpy(&ack_number, pkt->data, sizeof(int));
-
+  printf("Sender_FromLowerLayer  expected_ack:%d ack_num:%d\n", expected_ack, ack_number);
   if(ack_number == expected_ack){
     Sender_StartTimer(TIMEOUT);
     ++expected_ack;
     Send_Message();
   }
-  if(expected_ack == max_seq_num) Sender_StopTimer();
+  if(expected_ack == max_seq_num){
+    printf("stop\n");
+    Sender_StopTimer();
+  }
 }
 
 /* event handler, called when the timer expires */
