@@ -6,8 +6,8 @@
  *       situations.  In this implementation, the packet format is laid out as
  *       the following:
  *
- *       |<-  1 byte  ->|<-             the rest            ->|
- *       | payload size |<-             payload             ->|
+ *       |<-2 byte->|<--4 byte-->|<-1 byte->|<-             the rest            ->|
+ *       | checksum | seq_number | length   |<-             payload             ->|
  *
  *       The first byte of each packet indicates the size of the payload
  *       (excluding this single-byte header)
@@ -61,8 +61,11 @@ void Receiver_Final()
 
 void response(int ack_num)
 {
+  //printf("response\n");
+  short check_sum = ~((ack_num >> 16)  + (ack_num & 0xFFFF));
   packet recv_pkt;
-  memcpy(recv_pkt.data, &ack_num, sizeof(int));
+  memcpy(recv_pkt.data, &check_sum, sizeof(short));
+  memcpy(recv_pkt.data + sizeof(short), &ack_num, sizeof(int));
   Receiver_ToLowerLayer(&recv_pkt);
 }
 
@@ -89,7 +92,7 @@ void Receiver_FromLowerLayer(struct packet *pkt)
       valid_bit[seq_number % BUFFER_SIZE] = 1;
       return;
     }else if(seq_number < expected_num){
-      // prevent loss
+      // prevent ack packet loss
       response(seq_number);
       return;
     }
@@ -122,9 +125,6 @@ deliver:
     if(valid_bit[expected_num % BUFFER_SIZE] == 1){
       pkt = &buffer[expected_num % BUFFER_SIZE];
       valid_bit[expected_num % BUFFER_SIZE] = 0;
-
-      //ack packet   | <- 4bytes -> |
-      //             | ack number   |  nothing   |
 
       goto deliver;
     }
