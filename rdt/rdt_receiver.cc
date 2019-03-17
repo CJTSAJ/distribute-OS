@@ -21,13 +21,22 @@
 #include "rdt_struct.h"
 #include "rdt_receiver.h"
 
-#define HEADER_SIZE 5
+#define HEADER_SIZE 7
 #define BUFFER_SIZE 128
 
 static packet* buffer; // buffer for disorder
 static char* valid_bit;
 static int expected_num;
 
+static short getCheckSum(packet* pkt)
+{
+  int len = pkt->data[HEADER_SIZE - 1] + sizeof(int);
+  unsigned int sum = 0;
+  int i = 2;
+  for(;i < len; i+=2) sum += *((short*)(&pkt->data[i]));
+  sum = ~((sum >> 16) + (sum & 0xFFFF));
+  return sum;
+}
 
 /* receiver initialization, called once at the very beginning */
 void Receiver_Init()
@@ -67,9 +76,13 @@ void Receiver_FromLowerLayer(struct packet *pkt)
     /* 1-byte header indicating the size of the payload */
     // the seq number expected
 
+    //checksum
+    short tmp_sum = *((short*)(pkt->data));
+    if(tmp_sum != getCheckSum(pkt)) return;
+
     //mycode
-    int seq_number = *((int*)pkt->data);
-    printf("Receiver_FromLowerLayer seq: %d  expect: %d\n", seq_number, expected_num);
+    int seq_number = *((int*)(pkt->data + sizeof(short)));
+    //printf("Receiver_FromLowerLayer seq: %d  expect: %d\n", seq_number, expected_num);
     //put it in buffer and waitting
     if(seq_number > expected_num){
       buffer[seq_number % BUFFER_SIZE] = *pkt;
@@ -89,7 +102,7 @@ deliver:
 //----------------------------------------------------------------------
 
 
-    msg->size = pkt->data[4];
+    msg->size = pkt->data[HEADER_SIZE - 1];
 
     /* sanity check in case the packet is corrupted */
     if (msg->size<0) msg->size=0;
