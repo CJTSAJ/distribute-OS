@@ -79,7 +79,7 @@ qos_dropper_init(void)
     /* to do */
     int tmp_ret;
     for(int i = 0; i < FLOWS_NUM; i++){
-      for(int j = 0; j < 3; i++){
+      for(int j = 0; j < 3; j++){
         tmp_ret = rte_red_rt_data_init(&app_reds[i][j]);
         if(tmp_ret)
           rte_panic("red data init failed!\n");
