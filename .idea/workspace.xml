@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a8f899f-d1cd-4738-8d40-c90083f3d743" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Scheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler$Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler$Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sjtu/sdic/mapreduce/core/Scheduler.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -17,11 +21,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Mapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="89">
+              <caret line="68" column="93" selection-start-line="68" selection-start-column="86" selection-end-line="68" selection-end-column="93" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4454#4455#0" expanded="true" />
+                <element signature="e#4511#4512#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Scheduler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="80" column="17" lean-forward="true" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="17" />
+            <state relative-caret-position="195">
+              <caret line="116" column="31" selection-start-line="116" selection-start-column="31" selection-end-line="116" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/MapFunc.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/src/test/java/MRTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1596">
-              <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+              <caret line="30" column="49" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -186,15 +216,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="mapreduce" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mapreduce" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mapreduce" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mapreduce" type="462c0819:PsiDirectoryNode" />
               <item name="rpc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -237,7 +258,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.MRTest.testSequentialSingle">
+  <component name="RunManager" selected="JUnit.MRTest">
     <configuration name="WordCount" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sjtu.sdic.mapreduce.WordCount" />
       <module name="mapreduce" />
@@ -278,8 +299,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MRTest.testSequentialSingle" />
         <item itemvalue="JUnit.MRTest" />
+        <item itemvalue="JUnit.MRTest.testSequentialSingle" />
         <item itemvalue="Application.WordCount" />
       </list>
     </recent_temporary>
@@ -300,7 +321,7 @@
       <workItem from="1558595785979" duration="10150000" />
       <workItem from="1558744840467" duration="21576000" />
       <workItem from="1558843204182" duration="3608000" />
-      <workItem from="1558918332902" duration="10757000" />
+      <workItem from="1558918332902" duration="15716000" />
     </task>
     <servers />
   </component>
@@ -314,13 +335,30 @@
     <history-entry file="MRTest_testSequentialSingle - 2019.05.27 at 15h 59m 16s.xml">
       <configuration name="MRTest.testSequentialSingle" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 16h 32m 20s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 16h 33m 31s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 16h 58m 30s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 17h 04m 52s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 17h 07m 46s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MRTest - 2019.05.27 at 18h 51m 55s.xml">
+      <configuration name="MRTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51048000" />
+    <option name="totallyTimeSpent" value="56007000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.269437" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -331,7 +369,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -389,16 +427,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/MapFunc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="17" column="18" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/common/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -422,18 +450,6 @@
           <caret line="104" column="71" selection-start-line="104" selection-start-column="71" selection-end-line="104" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Mapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="68" column="101" selection-start-line="68" selection-start-column="94" selection-end-line="68" selection-end-column="101" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4454#4455#0" expanded="true" />
-            <element signature="e#4511#4512#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -507,7 +523,7 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/MRTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1596">
-          <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+          <caret line="30" column="49" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -521,10 +537,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/MapFunc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Mapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="68" column="93" selection-start-line="68" selection-start-column="86" selection-end-line="68" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4454#4455#0" expanded="true" />
+            <element signature="e#4511#4512#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sjtu/sdic/mapreduce/core/Scheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="80" column="17" lean-forward="true" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="17" />
+        <state relative-caret-position="195">
+          <caret line="116" column="31" selection-start-line="116" selection-start-column="31" selection-end-line="116" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Cachhe on 2019/4/22.
@@ -57,7 +58,7 @@ public class Scheduler {
         // Your code here (Part III, Part IV).
         CountDownLatch downLatch = new CountDownLatch(nTasks);
 
-        //vector: multi-thread safe
+        //CopyOnWriteArrayList: multi-thread safe, mark the task state
         CopyOnWriteArrayList<Boolean> task_flag = new CopyOnWriteArrayList();
         for(int i = 0; i < nTasks; i++){
             task_flag.add(false);
@@ -67,8 +68,8 @@ public class Scheduler {
             boolean finish_flag = false;
             while(!finish_flag){
                 finish_flag = true;
-                for(int i = 0; i < nTasks; i++){
-                    if(task_flag.get(i))
+                for(int i = 0; i < nTasks; i++) {
+                    if (task_flag.get(i))
                         continue;
                     finish_flag = false;
 
@@ -79,9 +80,10 @@ public class Scheduler {
                     Thread do_task = new Thread(t);
                     do_task.start();
                 }
-                //wait for all task have completed, then return
-                downLatch.await(); //must handle exception
             }
+
+            //wait for all task have completed, then return
+            downLatch.await(); //must handle exception
         }
         catch (InterruptedException i){
             i.printStackTrace();
