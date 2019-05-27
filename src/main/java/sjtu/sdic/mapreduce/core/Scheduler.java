@@ -73,12 +73,14 @@ public class Scheduler {
                     finish_flag = false;
 
                     DoTaskArgs taskArgs = new DoTaskArgs(jobName, mapFiles[i], phase, i, nOther);
+
+                    //registerChan.read():must handle exception
                     Task t = new Task(registerChan.read(), downLatch, registerChan, task_flag, taskArgs);
                     Thread do_task = new Thread(t);
                     do_task.start();
                 }
                 //wait for all task have completed, then return
-                downLatch.await();
+                downLatch.await(); //must handle exception
             }
         }
         catch (InterruptedException i){
