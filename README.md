@@ -43,3 +43,12 @@ Some resources directly or indirectly refer to the [original materials](https://
 - 进入一个大循环，当nTask个task全部执行完后退出循环
 - 用CountDownLatch保证当所有task完成后才退出，每个task线程执行后都会把latch-1，latch等于0时，表示所有线程完成
 
+## Part5
+该部分的工作主要是统计每个单词在那些文件中出现了。InvertedIndex在整个架构中的地位层级与wordCOunt类似，实现它自己的mapFunc和reduceFunc，这两个函数将作为参数传递给Mapper中的doMap和Reducer中的doReduce
+
+- mapFunc主要是解析该文件内的每个word，然后生成key value对，key为word，value为该文件名
+- doMap调用该函数得到keyvalue对的list，然后写到临时文件中
+- doReduce读取这些文件，把重复的key合并为一个，value形成一个数组，传递给reduceFunc函数
+- reduceFunc函数根据传进来的value数组，根据要求生成统一格式的字符串，并且删除重复的文件
+- 最后doReduce将统一格式的字符串输出到文件。
+
