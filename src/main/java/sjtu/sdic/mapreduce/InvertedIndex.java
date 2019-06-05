@@ -14,13 +14,39 @@ import java.util.regex.Pattern;
  * Created by Cachhe on 2019/4/24.
  */
 public class InvertedIndex {
-
+    //key: word    value: file that contains this word;
     public static List<KeyValue> mapFunc(String file, String value) {
-        return null;
+        Pattern p = Pattern.compile("[a-zA-Z0-9]+");
+        Matcher m = p.matcher(value);
+
+        List<KeyValue> ret = new ArrayList<>();
+        while(m.find()){
+            String tmp_key = m.group();
+            ret.add(new KeyValue(tmp_key, file));
+        }
+        return ret;
     }
 
+    //output: (number of file) file1,file2,file3 ....
     public static String reduceFunc(String key, String[] values) {
-        return null;
+        //attention: should delete the repeated file
+        Set<String> set = new HashSet();
+        for(String tmp_str : values){
+            set.add(tmp_str);
+        }
+
+        Object[] new_values = set.toArray();
+        //the most effective add string: StringBuilder
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.valueOf(new_values.length));
+        sb.append(" ");
+        for(Object tmp_str : new_values){
+            sb.append(tmp_str);
+            sb.append(",");
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
     public static void main(String[] args) {
