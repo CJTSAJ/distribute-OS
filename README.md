@@ -35,7 +35,7 @@ Some resources directly or indirectly refer to the [original materials](https://
 - 此时doReduce已将重复单词的value整合成一个数组
 - 该**单词的数量即为该数组的长度**，所以直接返回传入字符串数组的长度即可
 
-## Part3
+## Part3/Part4
 该部分主要是对mapReduce进行多线程并发执行。需要完成的函数只有schedule函数，Master会在两个阶段map和reduce分别调用该函数，schedule的工作主要是讲当前所有的task分配给不同的worker，一般来说，task的数量多于worker数量，所以一个worker可能会处理多个task。
 注：schedule应该**等待所有task完成后**再返回。
 
