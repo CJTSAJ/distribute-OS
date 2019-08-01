@@ -65,7 +65,7 @@ struct jailhouse_system {
 - debug_console:
   - .address
   - .size
-  - .type: 根据平台选择不同的类型，类型定义于include/jailhouse/console.h
+  - .type: 根据平台选择不同的类型，类型定义于include/jailhouse/console.h，例：JAILHOUSE_CON_TYPE_IMX
   - .flags: 同见include/jailhouse/console.h
  ```
 struct jailhouse_console {
@@ -78,7 +78,7 @@ struct jailhouse_console {
 	__u64 clock_reg;
 } __attribute__((packed));
 ```
-- .platform_info:
+- .platform_info: 若arm需要配置pci，需要虚拟pci，pci_is_virtual置为1。driver/pci.c中jailhouse_pci_virtual_root_devices_add函数会检查pci_is_virtual并调用函数创建虚拟pci(暂时未实现)。
 ```
 .platform_info = {
 			.arm = {
@@ -170,7 +170,7 @@ struct jailhouse_irqchip {
 	},
 ```
 
-- .pci_devices: pci设备配置，bdf,type,iommu; arm64中的pci_devices type都是IVSHMEM
+- .pci_devices: arm中的pci_devices type都是IVSHMEM，用于cell间通信使用。pci设备配置，bdf,type,iommu;
 ```
 struct jailhouse_pci_device {
 	__u8 type;
@@ -194,7 +194,7 @@ struct jailhouse_pci_device {
 } __attribute__((packed));
 ```
 
-- .pci_caps: arm64通常不配置该项，用于x86
+- .pci_caps: arm通常不配置该项，用于x86
 
 ## non-root cell 配置
 ```
@@ -204,4 +204,24 @@ struct {
 	struct jailhouse_memory mem_regions[3];
 	struct jailhouse_irqchip irqchips[1];
 }
+```
+```
+.cell = {
+		.signature = JAILHOUSE_CELL_DESC_SIGNATURE,
+		.revision = JAILHOUSE_CONFIG_REVISION,
+		.name = "gic-demo",
+		.flags = JAILHOUSE_CELL_PASSIVE_COMMREG,
+
+		.cpu_set_size = sizeof(config.cpus),
+		.num_memory_regions = ARRAY_SIZE(config.mem_regions),
+		.num_irqchips = 0,
+		.num_pci_devices = 0,
+
+		.console = {
+			.address = 0x30860000,
+			.type = JAILHOUSE_CON_TYPE_IMX,
+			.flags = JAILHOUSE_CON_ACCESS_MMIO |
+				 JAILHOUSE_CON_REGDIST_4,
+		},
+	},
 ```
