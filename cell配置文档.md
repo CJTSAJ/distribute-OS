@@ -6,6 +6,7 @@ struct {
 	struct jailhouse_memory mem_regions[4];
 	struct jailhouse_irqchip irqchips[1];
 	struct jailhouse_pci_device pci_devices[1];
+	struct jailhouse_pci_capability pci_caps[11];
 }
 ```
 
@@ -64,7 +65,7 @@ struct jailhouse_system {
 - debug_console:
   - .address
   - .size
-  - .type: 根据需要选择不同的类型，类型定义于include/jailhouse/console.h
+  - .type: 根据平台选择不同的类型，类型定义于include/jailhouse/console.h
   - .flags: 同见include/jailhouse/console.h
  ```
 struct jailhouse_console {
@@ -78,7 +79,28 @@ struct jailhouse_console {
 } __attribute__((packed));
 ```
 - .platform_info:
+```
+.platform_info = {
+			.arm = {
+				.gic_version = 3,
+				.gicd_base = 0x38800000,
+				.gicr_base = 0x38880000,
+				.maintenance_irq = 25,
+			},
+		}
+```
 - .root_cell: 
+```
+.root_cell = {
+			.name = "RootCell",
+			.cpu_set_size = sizeof(config.cpus),
+			.num_memory_regions = ARRAY_SIZE(config.mem_regions),
+			.num_irqchips = ARRAY_SIZE(config.irqchips),
+			.num_pio_regions = ARRAY_SIZE(config.pio_regions),
+			.num_pci_devices = ARRAY_SIZE(config.pci_devices),
+			.num_pci_caps = ARRAY_SIZE(config.pci_caps),
+		},
+```
 ```
 struct jailhouse_cell_desc {
 	char signature[6];
@@ -104,7 +126,31 @@ struct jailhouse_cell_desc {
 	struct jailhouse_console console;
 } __attribute__((packed));
 ```
-- .irqchips: 中断处理配置，x86对应IOAPIC, arm对应gic配置
+
+- .cpus: 4个cpu: {0xf}; 128个cpu: {0xffffffffffffffff, 0xffffffffffffffff}
+```
+.cpus = {
+		% for n in range(int(cpucount / 64)):
+		0xffffffffffffffff,
+		% endfor
+		% if (cpucount % 64):
+		${'0x%016x,' % ((1 << (cpucount % 64)) - 1)}
+		% endif
+	},
+```
+		
+
+- .mem_regions: 内存分配，数组形式，每个表示一个区域，比如：MMIO IVSHMEM RAM；根据falgs设置内存可读、可写、可执行、DMA、等特性
+```
+struct jailhouse_memory {
+	__u64 phys_start;
+	__u64 virt_start;
+	__u64 size;
+	__u64 flags;
+} __attribute__((packed));
+```
+
+- .irqchips: 中断处理配置，x86对应IOAPIC, arm对应gic配置。
 ```
 struct jailhouse_irqchip {
 	__u64 address;
@@ -113,11 +159,49 @@ struct jailhouse_irqchip {
 	__u32 pin_bitmap[4];
 } __attribute__((packed));
 ```
-
 ```
-if (config->revision != JAILHOUSE_CONFIG_REVISION) {
-		pr_err("jailhouse: Configuration revision mismatch\n");
-		err = -EINVAL;
-		goto kfree_config_out;
-	}
+.irqchips = {
+		/* GIC */ {
+			.address = 0x38800000,
+			.pin_base = 32,
+			.pin_bitmap = {
+				0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+			}
+	},
+```
+
+- .pci_devices: pci设备配置，bdf,type,iommu; arm64中的pci_devices type都是IVSHMEM
+```
+struct jailhouse_pci_device {
+	__u8 type;
+	__u8 iommu;
+	__u16 domain;
+	__u16 bdf;
+	__u32 bar_mask[6];
+	__u16 caps_start;
+	__u16 num_caps;
+	__u8 num_msi_vectors;
+	__u8 msi_64bits:1;
+	__u8 msi_maskable:1;
+	__u16 num_msix_vectors;
+	__u16 msix_region_size;
+	__u64 msix_address;
+	/** Memory region index of virtual shared memory device. */
+	__u32 shmem_region;
+	/** PCI subclass and interface ID of virtual shared memory device. */
+	__u16 shmem_protocol;
+	__u8 padding[2];
+} __attribute__((packed));
+```
+
+- .pci_caps: arm64通常不配置该项，用于x86
+
+## non-root cell 配置
+```
+struct {
+	struct jailhouse_cell_desc cell;
+	__u64 cpus[1];
+	struct jailhouse_memory mem_regions[3];
+	struct jailhouse_irqchip irqchips[1];
+}
 ```
